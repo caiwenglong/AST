@@ -29,6 +29,7 @@ patch(container, myVnode)
 
 
 btn.addEventListener('click', function () {
+  debugger
   patch(myVnode, myVnode1)
 })
 

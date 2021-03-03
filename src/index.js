@@ -3,22 +3,24 @@ import patch from "./mySnabbdom/patch";
 const container = document.getElementById("container")
 const btn = document.getElementById("btn")
 
-const newVNode = h("ul", {}, [
-    h("li", { key: 'A' }, 'a' ),
-    h("li", { key: 'B' }, 'b' ),
-    h("li", { key: 'C' }, 'c')
+const newVNode = h("section", {}, [
+    h("p", { key: 'A' }, 'a' ),
+    h("p", { key: 'B' }, 'b' ),
+    h("p", { key: 'C' }, 'c'),
+    h("p", { key: 'D' }, 'd'),
+    h("p", { key: 'E' }, 'e')
 ])
 
 
-const newVNode2 = h("ul", {}, '新节点')
+const newVNode2 = h("section", {}, '新节点')
 
-const newVNode3 = h("ul", {}, [
-    h("li", { key: 'A' }, 'a' ),
-    h("li", { key: 'B' }, 'b' ),
-    h("li", { key: 'M' }, 'm' ),
-    h("li", { key: 'N' }, 'n' ),
-    h("li", { key: 'C' }, 'c'),
-    h("li", { key: 'D' }, 'd'),
+const newVNode3 = h("section", {}, [
+  h("p", { key: 'A' }, 'a' ),
+  h("p", { key: 'C' }, 'c'),
+  h("p", { key: 'D' }, 'd'),
+  h("p", { key: 'B' }, 'b' ),
+  h("p", { key: 'R' }, 'RRRRRRRR'),
+  h("p", { key: 'E' }, 'e'),
 ])
 
 patch(container, newVNode)

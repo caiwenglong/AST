@@ -1,5 +1,15 @@
 import createElement from './createElement'
+import updateChildren from './updateChildren'
 
+/**
+ * 对比更新两个相同的节点
+ * 1、如果都是文本，且文本都一样，那么就什么事情都不做，直接返回
+ * 2、如果都是文本，且文本不一样，那么就直接用innerText方法覆盖
+ * 3、如果老的虚拟dom是文本，而新的虚拟DOM是数组，那么就清空老虚拟DOM的文本，使用appendChild添加新虚拟节点数组中的内容
+ * 4、如果都是数组，那么就进行diff算法子节点更新策略
+ * @param oldVNode
+ * @param newVNode
+ */
 export default function (oldVNode, newVNode) {
   if(newVNode === oldVNode) return
   // 1、判读一下新的节点是否有文本节点
@@ -21,30 +31,10 @@ export default function (oldVNode, newVNode) {
        * 新增的情况：新创建的节点要插入所有未处理的节点之前,而不是所有已处理的节点之后
        * 遍历新旧虚拟节点的子元素，看看在旧的虚拟节点上有没有这个元素
        */
-      let un = 0;
       for (let i = 0; i < newVNode.children.length; i++) {
-        let isExit = false
-        for (let j = 0; j < oldVNode.children.length; j++) {
-          if(
-            newVNode.children[i].sel === oldVNode.children[j].sel &&
-            newVNode.children[i].key === oldVNode.children[j].key
-          ) {
-            isExit = true
-          }
-        }
-        if(!isExit) {
-          const newElement = createElement(newVNode.children[i])
-          newVNode.children[i].elm = newElement
-          if(un < oldVNode.children.length) {
-            oldVNode.elm.insertBefore(newElement, oldVNode.children[un].elm)
-          } else {
-            oldVNode.elm.appendChild(newElement)
-          }
-        } else {
-          un ++
-        }
+        createElement(newVNode.children[i])
       }
-
+      updateChildren(oldVNode.elm, oldVNode.children, newVNode.children)
     }
   }
 }
