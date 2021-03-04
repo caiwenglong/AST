@@ -103,13 +103,18 @@ export  default function updateChildren(parentElm, oldCh, newCh) {
     //
     let idx = oldCh.length
     oldCh.forEach((item,index) => {
-      if(item !== undefined && item.text === newCh[newEndIndex + 1].text) {
+      console.log(newCh[newEndIndex + 1])
+      if(item !== undefined && newCh[newEndIndex + 1] !== undefined && item.text === newCh[newEndIndex + 1].text) {
         idx = index
       }
     })
     for (let i = newStartIndex; i <= newEndIndex; i++) {
       const newDOM = createElement(newCh[i])
-      parentElm.insertBefore(newDOM, oldCh[idx].elm)
+      if(oldCh[idx]) {
+        parentElm.insertBefore(newDOM, oldCh[idx].elm)
+      } else {
+        parentElm.insertBefore(newDOM, null)
+      }
     }
   }
 
